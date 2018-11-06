@@ -1,13 +1,14 @@
-const React = require('react');
-const useForceUpdate = require('use-force-update').default;
-const createReducer = require('../create-reducer');
-const globalStateManager = require('../global-state-manager');
-const reducers = require('../reducers');
-const setGlobal = require('./set-global');
+import React from 'react';
+import useForceUpdate from 'use-force-update';
+import createReducer from '../create-reducer';
+import globalStateManager from '../global-state-manager';
+import reducers from '../reducers';
+import setGlobal from './set-global';
 
-module.exports = function useGlobal(property, setterOnly = false) {
+export default function useGlobal(property: string, setterOnly: boolean = false) {
 
   // Require v16.7
+  // @ts-ignore
   if (!React.useState) {
     throw new Error('React v16.7 or newer is required for useGlobal.');
   }
@@ -15,19 +16,16 @@ module.exports = function useGlobal(property, setterOnly = false) {
   const forceUpdate = useForceUpdate();
 
   // If this component ever updates or unmounts, remove the force update listener.
+  // @ts-ignore
   React.useEffect(() => () => {
-    globalStateManager.removeKeyListener(forceUpdate);
+    globalStateManager.removePropertyListener(forceUpdate);
   });
 
   // Return the entire global state.
   if (!property) {
 
-    const globalStateSetter = (newGlobal, callback = null) => {
-      setGlobal(
-        newGlobal,
-        callback,
-        () => globalStateManager.stateWithReducers
-      );
+    const globalStateSetter = (newGlobal: any, callback = null) => {
+      setGlobal(newGlobal, callback);
     };
 
     if (setterOnly) {
@@ -49,7 +47,7 @@ module.exports = function useGlobal(property, setterOnly = false) {
     return reducers[property];
   }
 
-  const globalPropertySetter = (value, callback = null) =>
+  const globalPropertySetter = (value: any, callback = null) =>
     globalStateManager.setAnyCallback(
       { [property]: value },
       callback

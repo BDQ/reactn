@@ -13,10 +13,11 @@ Example after:
 
 */
 
-const globalStateManager = require('./global-state-manager');
+import globalStateManager from './global-state-manager';
+import { GlobalReducer, LocalReducer } from '../typings/reactn';
 
-module.exports = function createReducer(reducer) {
-  return function globalReducer(...args) {
+export default function createReducer(reducer: GlobalReducer): LocalReducer {
+  return function globalReducer(...args: any[]): Promise<void> | void {
     return globalStateManager.setAny(
       reducer(globalStateManager.stateWithReducers, ...args)
     );

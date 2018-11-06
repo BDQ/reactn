@@ -1,33 +1,24 @@
 {
   "name": "reactn",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Charles Stover <npmjs@charlesstover.com>",
   "description": "React, but with built-in global state management.",
   "license": "MIT",
   "main": "index.js",
   "repository": "https://github.com/CharlesStover/reactn.git",
   "scripts": {
-    "add-docs": "cd docs-src && yarn add",
-    "build": "webpack",
-    "build-docs": "rm -rf docs && cd docs-src && npm run build && mv build ../docs",
-    "dev": "set NODE_ENV=development&& webpack",
-    "prepublishOnly": "npm run build",
-    "start-docs": "cd docs-src && npm run start",
+    "build": "tsc",
+    "dev": "set NODE_ENV=development&& tsc",
+    "prepublishOnly": "tsc",
     "test": "echo No test exists. && exit 0"
   },
   "dependencies": {
     "use-force-update": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-loader": "^8.0.4",
-    "webpack": "^4.20.2",
-    "webpack-cli": "^3.1.2"
+    "@types/node": "^10.12.2",
+    "@types/react": "^16.4.18",
+    "typescript": "^3.1.6"
   },
   "peerDependencies": {
     "react": "^16.7.0-alpha.0"

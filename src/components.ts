@@ -1,18 +1,19 @@
-const { Component, PureComponent } = require('react');
-const {
+import { Component, ComponentClass, PureComponent } from 'react';
+import {
   ReactNComponentWillUnmount,
   ReactNGlobal,
   ReactNGlobalCallback,
   ReactNSetGlobal
-} = require('./methods');
+} from './methods';
+import { GlobalCallback, GlobalComponentClass, NewGlobal } from '../typings/reactn';
 
 // import React from 'reactn';
 // React.Component, React.PureComponent
-const createReactNClassComponent = Super =>
+const createReactNClassComponent = <P, S>(Super: ComponentClass<P, S>): GlobalComponentClass<P, S> =>
   class ReactNComponent extends Super {
 
-    constructor(...args) {
-      super(...args);
+    constructor(props: P, ...args: any[]) {
+      super(props, ...args);
 
       const proto = Object.getPrototypeOf(this);
 
@@ -25,6 +26,8 @@ const createReactNClassComponent = Super =>
             this.componentWillUnmount :
             proto.componentWillUnmount.bind(this);
         this.componentWillUnmount = (...a) => {
+
+          // @ts-ignore
           ReactNComponentWillUnmount(this);
           cb(...a);
         };
@@ -32,23 +35,30 @@ const createReactNClassComponent = Super =>
     }
 
     componentWillUnmount() {
+
+      // @ts-ignore
       ReactNComponentWillUnmount(this);
     }
 
     _globalCallback = () => {
+
+      // @ts-ignore
       ReactNGlobalCallback(this);
     };
 
     get global() {
+
+      // @ts-ignore
       return ReactNGlobal(this);
     }
 
-    setGlobal(newGlobal, callback = null) {
+    setGlobal(newGlobal: NewGlobal, callback: GlobalCallback | null = null) {
+
+      // @ts-ignore
       ReactNSetGlobal(this, newGlobal, callback);
     }
   };
 
-module.exports = {
-  ReactNComponent: createReactNClassComponent(Component),
-  ReactNPureComponent: createReactNClassComponent(PureComponent)
-};
+export const ReactNComponent = createReactNClassComponent(Component);
+
+export const ReactNPureComponent = createReactNClassComponent(PureComponent);

@@ -1,8 +1,8 @@
 /src
 /tests
-/.babelrc
 /.gitignore
 /.npmignore
 /.travis.yml
-/webpack.config.js
+/FAQ.md
+/tsconfig.json
 /yarn-error.lock

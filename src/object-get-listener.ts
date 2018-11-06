@@ -1,6 +1,9 @@
 // Return an object that executes a read listener.
 
-module.exports = function objectGetListener(obj, listener) {
+type AnyObject = { [key: string]: any };
+type Listener = (key: string) => void;
+
+export default function objectGetListener(obj: AnyObject, listener: Listener) {
   return Object.keys(obj).reduce(
     (accumulator, key) => {
       Object.defineProperty(accumulator, key, {
