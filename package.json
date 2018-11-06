@@ -6,6 +6,7 @@
   "license": "MIT",
   "main": "index.js",
   "repository": "https://github.com/CharlesStover/reactn.git",
+  "types": "./index.d.ts",
   "scripts": {
     "add-docs": "cd docs-src && yarn add",
     "build": "webpack",
